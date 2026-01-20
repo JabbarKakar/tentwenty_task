@@ -5,6 +5,7 @@ import '../../domain/entities/movie_entity.dart';
 import '../providers/search_provider.dart';
 import '../widgets/loading_widget.dart';
 import 'genre_movies_screen.dart';
+import 'movie_detail_screen.dart';
 import 'search_results_screen.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -357,10 +358,13 @@ class _SearchScreenState extends State<SearchScreen> {
     
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: Row(
-        children: [
-          // Movie Poster
-          ClipRRect(
+      child: GestureDetector(
+        onTap: () => _navigateToMovieDetail(movie),
+        behavior: HitTestBehavior.opaque,
+        child: Row(
+          children: [
+            // Movie Poster
+            ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Container(
               width: 80,
@@ -430,11 +434,18 @@ class _SearchScreenState extends State<SearchScreen> {
               color: Color(0xFF999999),
               size: 20,
             ),
-            onPressed: () {
-              // Show options menu
-            },
+            onPressed: () => _navigateToMovieDetail(movie),
           ),
         ],
+        ),
+      ),
+    );
+  }
+
+  void _navigateToMovieDetail(MovieEntity movie) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => MovieDetailScreen(movie: movie),
       ),
     );
   }
