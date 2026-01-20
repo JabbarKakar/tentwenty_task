@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/constants/app_assets.dart';
 import 'seat_selection_screen.dart';
 
 /// Dummy screening: time, cinema, hall, price, bonus.
@@ -314,13 +315,58 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
   }
 
   Widget _buildMiniSeatMap(List<List<int>> grid) {
+    const cRegular = Color(0xFF60C2FF);
+    const cVip = Color(0xFF564CA3);
+    const cBooked = Color(0xFFDBDBDF);
+    final rows = grid.length;
+    final cols = rows > 0 ? grid[0].length : 0;
+    if (rows == 0 || cols == 0) return const SizedBox.shrink();
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: Container(
         color: const Color(0xFFF6F6FA),
-        child: CustomPaint(
-          size: const Size(double.infinity, double.infinity),
-          painter: _MiniSeatMapPainter(grid: grid),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 6,
+              width: double.infinity,
+              child: CustomPaint(painter: _MiniScreenArcPainter()),
+            ),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, c) {
+                  final cellW = c.maxWidth / cols;
+                  final cellH = c.maxHeight / rows;
+                  final seatSize = (cellW < cellH ? cellW : cellH) * 0.85;
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(rows, (i) => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: List.generate(cols, (j) {
+                        Color color;
+                        switch (grid[i][j]) {
+                          case 0: color = cRegular; break;
+                          case 1: color = cVip; break;
+                          default: color = cBooked;
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.all(1),
+                          child: AppAssets.svgWithColor(
+                            AppAssets.iconsSeat,
+                            color: color,
+                            width: seatSize,
+                            height: seatSize,
+                          ),
+                        );
+                      }),
+                    )),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -347,45 +393,20 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
   }
 }
 
-class _MiniSeatMapPainter extends CustomPainter {
-  final List<List<int>> grid;
-
-  _MiniSeatMapPainter({required this.grid});
-
+class _MiniScreenArcPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     const cRegular = Color(0xFF60C2FF);
-    const cVip = Color(0xFF564CA3);
-    const cBooked = Color(0xFFDBDBDF);
-    final rows = grid.length;
-    final cols = rows > 0 ? grid[0].length : 0;
-    if (rows == 0 || cols == 0) return;
-    final cellW = size.width / (cols + 1);
-    final cellH = size.height / (rows + 1.5);
-    final r = (cellW < cellH ? cellW : cellH) * 0.35;
-    for (var i = 0; i < rows; i++) {
-      for (var j = 0; j < cols; j++) {
-        Color color;
-        switch (grid[i][j]) {
-          case 0:
-            color = cRegular;
-            break;
-          case 1:
-            color = cVip;
-            break;
-          default:
-            color = cBooked;
-        }
-        final cx = (j + 1) * cellW;
-        final cy = (i + 0.8) * cellH;
-        canvas.drawCircle(Offset(cx, cy), r, Paint()..color = color);
-      }
-    }
-    // Curved screen line at top
     final path = Path()
-      ..moveTo(0, cellH * 0.4)
-      ..quadraticBezierTo(size.width / 2, 0, size.width, cellH * 0.4);
-    canvas.drawPath(path, Paint()..color = cRegular..strokeWidth = 1.5..style = PaintingStyle.stroke);
+      ..moveTo(0, size.height)
+      ..quadraticBezierTo(size.width / 2, 0, size.width, size.height);
+    canvas.drawPath(
+      path,
+      Paint()
+        ..color = cRegular
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5,
+    );
   }
 
   @override

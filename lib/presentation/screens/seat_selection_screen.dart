@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/constants/app_assets.dart';
 
 /// Seat state: 0=regular available, 1=VIP available, 2=booked, 3=selected.
 const int _regular = 0;
@@ -283,13 +284,11 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: GestureDetector(
         onTap: () => _toggleSeat(r, c),
-        child: Container(
+        child: AppAssets.svgWithColor(
+          AppAssets.iconsSeat,
+          color: color,
           width: 20,
           height: 20,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(4),
-          ),
         ),
       ),
     );
@@ -338,11 +337,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: 16,
-          height: 16,
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(3)),
-        ),
+        AppAssets.svgWithColor(AppAssets.iconsSeat, color: color, width: 16, height: 16),
         const SizedBox(width: 6),
         Text(label, style: const TextStyle(fontSize: 12, color: Color(0xFF2E2739))),
       ],
