@@ -298,32 +298,24 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   Widget _buildSeatMap() {
     return SizedBox(
       height: 320,
-      child: Column(
-        children: [
-          Expanded(
-            child: InteractiveViewer(
-              minScale: 0.5,
-              maxScale: 2.0,
-              alignment: Alignment.topCenter,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.topCenter,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildRowLabels(),
-                    _buildSeatGrid(),
-                  ],
-                ),
-              ),
+      child: ClipRect(
+        child: InteractiveViewer(
+          minScale: 0.5,
+          maxScale: 3.0,
+          clipBehavior: Clip.hardEdge,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.topCenter,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildRowLabels(),
+                _buildSeatGrid(),
+              ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: _buildZoomButtons(),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -412,39 +404,6 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
             width: w,
             height: _seatH,
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildZoomButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _zoomBtn(Icons.add),
-            const SizedBox(height: 4),
-            _zoomBtn(Icons.remove),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _zoomBtn(IconData icon) {
-    return Material(
-      color: const Color(0xFFDBDBDF),
-      borderRadius: BorderRadius.circular(20),
-      child: InkWell(
-        onTap: () {},
-        borderRadius: BorderRadius.circular(20),
-        child: SizedBox(
-          width: 36,
-          height: 36,
-          child: Icon(icon, size: 20, color: const Color(0xFF2E2739)),
         ),
       ),
     );
