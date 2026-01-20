@@ -151,11 +151,36 @@ class SeatSelectionScreen extends StatefulWidget {
 
 class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   late List<List<int?>> _grid;
+  final TransformationController _transformController = TransformationController();
 
   @override
   void initState() {
     super.initState();
     _grid = _initialSeatLayout();
+  }
+
+  @override
+  void dispose() {
+    _transformController.dispose();
+    super.dispose();
+  }
+
+  void _zoomIn() {
+    final m = _transformController.value;
+    final s = m.getMaxScaleOnAxis();
+    final newS = (s * 1.25).clamp(0.5, 3.0);
+    if ((newS - s).abs() < 0.01) return;
+    final f = newS / s;
+    _transformController.value = m.clone()..scaleByDouble(f, f, 1, 1);
+  }
+
+  void _zoomOut() {
+    final m = _transformController.value;
+    final s = m.getMaxScaleOnAxis();
+    final newS = (s / 1.25).clamp(0.5, 3.0);
+    if ((newS - s).abs() < 0.01) return;
+    final f = newS / s;
+    _transformController.value = m.clone()..scaleByDouble(f, f, 1, 1);
   }
 
   String get _subtitle => '${widget.dateSubtitle} | ${widget.time} ${widget.hall}';
@@ -298,23 +323,62 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   Widget _buildSeatMap() {
     return SizedBox(
       height: 320,
-      child: ClipRect(
-        child: InteractiveViewer(
-          minScale: 0.5,
-          maxScale: 3.0,
-          clipBehavior: Clip.hardEdge,
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.topCenter,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildRowLabels(),
-                _buildSeatGrid(),
-              ],
+      child: Column(
+        children: [
+          Expanded(
+            child: ClipRect(
+              child: InteractiveViewer(
+                transformationController: _transformController,
+                minScale: 0.5,
+                maxScale: 3.0,
+                clipBehavior: Clip.hardEdge,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.topCenter,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildRowLabels(),
+                      _buildSeatGrid(),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: _buildZoomButtons(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildZoomButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _zoomBtn(Icons.add, onTap: _zoomIn),
+        const SizedBox(width: 8),
+        _zoomBtn(Icons.remove, onTap: _zoomOut),
+      ],
+    );
+  }
+
+  Widget _zoomBtn(IconData icon, {VoidCallback? onTap}) {
+    return Material(
+      color: const Color(0xFFDBDBDF),
+      borderRadius: BorderRadius.circular(20),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: SizedBox(
+          width: 36,
+          height: 36,
+          child: Icon(icon, size: 20, color: const Color(0xFF2E2739)),
         ),
       ),
     );
