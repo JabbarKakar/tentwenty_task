@@ -4,6 +4,7 @@ import '../../domain/entities/movie_entity.dart';
 import '../../domain/entities/movie_detail_entity.dart';
 import '../providers/movie_detail_provider.dart';
 import '../widgets/loading_widget.dart';
+import 'hall_and_times_screen.dart';
 import 'video_player_screen.dart';
 
 class MovieDetailScreen extends StatefulWidget {
@@ -226,10 +227,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Get Tickets functionality
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Get Tickets functionality'),
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => HallAndTimesScreen(movieTitle: movieDetail.title),
                           ),
                         );
                       },
