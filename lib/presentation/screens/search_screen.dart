@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/constants/app_assets.dart';
 import '../../domain/entities/genre_entity.dart';
 import '../../domain/entities/movie_entity.dart';
 import '../providers/search_provider.dart';
@@ -459,24 +460,20 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavItem(Icons.dashboard, 'Dashboard', false),
-          _buildNavItem(Icons.play_circle_outline, 'Watch', true),
-          _buildNavItem(Icons.video_library, 'Media Library', false),
-          _buildNavItem(Icons.more_horiz, 'More', false),
+          _buildNavItem(AppAssets.iconsDashboard, 'Dashboard', false),
+          _buildNavItem(AppAssets.iconsWatch, 'Watch', true),
+          _buildNavItem(AppAssets.iconsMediaLibrary, 'Media Library', false),
+          _buildNavItem(AppAssets.iconsMore, 'More', false),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, bool isActive) {
+  Widget _buildNavItem(String iconPath, String label, bool isActive) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(
-          icon,
-          size: 24,
-          color: isActive ? Colors.white : Colors.grey[600],
-        ),
+        AppAssets.navIcon(iconPath, isActive: isActive),
         const SizedBox(height: 4),
         Text(
           label,
