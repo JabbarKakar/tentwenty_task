@@ -347,10 +347,9 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: _buildZoomButtons(),
-          ),
+          Align(
+              alignment: Alignment.bottomRight,
+              child: _buildZoomButtons()),
         ],
       ),
     );
@@ -359,6 +358,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   Widget _buildZoomButtons() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: [
         _zoomBtn(Icons.add, onTap: _zoomIn),

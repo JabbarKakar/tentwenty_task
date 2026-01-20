@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'core/constants/app_assets.dart';
 import 'core/di/injection_container.dart';
 import 'presentation/screens/watch_screen.dart';
 
@@ -21,6 +22,8 @@ class MyApp extends StatelessWidget {
         title: 'TenTwenty Task',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          fontFamily: AppAssets.fontFamilyPoppins,
+          textTheme: ThemeData.light().textTheme.apply(fontFamily: AppAssets.fontFamilyPoppins),
           primarySwatch: Colors.blue,
         ),
         home: const WatchScreen(),

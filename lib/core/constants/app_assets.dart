@@ -15,6 +15,9 @@ abstract class AppAssets {
   // --- Seat icon (SVG) ---
   static const String iconsSeat = 'assets/icons/seat.svg';
 
+  // --- Font family ---
+  static const String fontFamilyPoppins = 'Poppins';
+
   /// Renders an SVG with a solid color tint (e.g. for seat icons).
   static Widget svgWithColor(
     String assetPath, {
