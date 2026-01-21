@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'core/constants/app_assets.dart';
 import 'core/constants/app_colors.dart';
 import 'core/di/injection_container.dart';
-import 'presentation/screens/watch_screen.dart';
+import 'presentation/screens/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           textTheme: ThemeData.light().textTheme.apply(fontFamily: AppAssets.fontFamilyPoppins),
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.accentBlue, brightness: Brightness.light),
         ),
-        home: const WatchScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
