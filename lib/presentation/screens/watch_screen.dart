@@ -380,8 +380,9 @@ class _WatchScreenState extends State<WatchScreen> {
   Widget _buildBottomNavigationBar() {
     return Container(
       height: 80,
-      decoration: const BoxDecoration(
-                              color: AppColors.primaryDark,
+      decoration:  BoxDecoration(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(27), topRight: Radius.circular(27)),
+        color: AppColors.primaryDark,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

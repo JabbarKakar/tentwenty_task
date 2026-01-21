@@ -315,7 +315,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             top: 16,
             right: 16,
             child: IconButton(
-              icon: const Icon(Icons.close, color: AppColors.primaryDark, size: 28),
+              icon: const Icon(Icons.close, color: AppColors.surface, size: 28),
               onPressed: _onDone,
             ),
           ),

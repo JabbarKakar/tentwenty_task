@@ -123,15 +123,15 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
       pinned: true,
       backgroundColor: Colors.black,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.white),
+        icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         onPressed: () => Navigator.of(context).pop(),
       ),
       title: const Text(
         'Watch',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
         ),
       ),
       flexibleSpace: FlexibleSpaceBar(
@@ -182,7 +182,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
               right: 16,
               top: 120,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     movieDetail.title,
@@ -225,7 +225,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 children: [
                   // Get Tickets button
                   SizedBox(
-                    width: double.infinity,
+                    width: 245,
+                    height: 50,
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(
@@ -254,7 +255,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   const SizedBox(height: 12),
                   // Watch Trailer button
                   SizedBox(
-                    width: double.infinity,
+                    width: 245,
+                    height: 50,
                     child: ElevatedButton.icon(
                       onPressed: provider.trailer != null
                           ? () {
@@ -277,9 +279,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.accentPurple,
+                        backgroundColor: Colors.transparent,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
+                          side: BorderSide(color: AppColors.accentBlue),
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
@@ -306,8 +309,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             const Text(
               'Genres',
               style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
                 color: AppColors.primaryDark,
               ),
             ),
@@ -325,7 +328,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   AppColors.accentGold,
                 ];
                 return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                   decoration: BoxDecoration(
                     color: colors[index % colors.length],
                     borderRadius: BorderRadius.circular(20),
@@ -333,7 +336,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   child: Text(
                     genre,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                     ),
@@ -347,8 +350,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           const Text(
             'Overview',
             style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
               color: AppColors.primaryDark,
             ),
           ),
@@ -356,7 +359,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           Text(
             movieDetail.overview,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
               color: AppColors.textMuted,
               height: 1.5,
             ),
