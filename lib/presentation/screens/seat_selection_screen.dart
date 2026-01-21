@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_assets.dart';
+import '../../core/constants/app_colors.dart';
 
 // --- Pixel-perfect dimensions from spec ---
 const double _shortW = 14;
@@ -10,11 +11,11 @@ const double _gapH = 8;
 const double _gapV = 14;
 const double _aisleW = 24;
 
-// --- Colors ---
-const Color _cAvail = Color(0xFF5BC0FF);
-const Color _cUnavail = Color(0xFFD6D6D6);
-const Color _cSelected = Color(0xFFD4A017);
-const Color _cPremium = Color(0xFF5A4FCF);
+// --- Colors (from AppColors) ---
+const Color _cAvail = AppColors.accentBlue;
+const Color _cUnavail = AppColors.borderLight;
+const Color _cSelected = AppColors.accentGold;
+const Color _cPremium = AppColors.accentPurple;
 
 // --- State: 0=available, 1=unavailable, 2=selected, 3=premium, null=empty slot ---
 
@@ -234,7 +235,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6FA),
+      backgroundColor: AppColors.surface,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -271,7 +272,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
       child: Row(
         children: [
           IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF2E2739), size: 20),
+            icon: const Icon(Icons.arrow_back_ios, color: AppColors.primaryDark, size: 20),
             onPressed: () => Navigator.of(context).pop(),
           ),
           Expanded(
@@ -282,14 +283,14 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF2E2739),
+                    color: AppColors.primaryDark,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 2),
                 Text(
                   _subtitle,
-                  style: const TextStyle(fontSize: 14, color: Color(0xFF60C2FF)),
+                  style: const TextStyle(fontSize: 14, color: AppColors.accentBlue),
                 ),
               ],
             ),
@@ -306,13 +307,13 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
       painter: _ScreenCurvePainter(),
       child: const Center(
         child: Padding(
-          padding: EdgeInsets.only(bottom: 4),
+          padding: EdgeInsets.only(bottom: 20, top: 30),
           child: Text(
             'SCREEN',
             style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF2E2739),
+              fontSize: 8,
+              fontWeight: FontWeight.w500,
+              color: AppColors.textMuted,
             ),
           ),
         ),
@@ -370,15 +371,16 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
 
   Widget _zoomBtn(IconData icon, {VoidCallback? onTap}) {
     return Material(
-      color: const Color(0xFFDBDBDF),
+      color: AppColors.surface,
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(20),
-        child: SizedBox(
+        child: Container(
           width: 36,
           height: 36,
-          child: Icon(icon, size: 20, color: const Color(0xFF2E2739)),
+          decoration: BoxDecoration(border: Border.all(color: AppColors.borderLight), shape: .circle),
+          child: Icon(icon, size: 20, color: AppColors.primaryDark),
         ),
       ),
     );
@@ -406,7 +408,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
           style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
-            color: Color(0xFF2E2739),
+            color: AppColors.primaryDark,
           ),
         ),
       ),
@@ -499,7 +501,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
         const SizedBox(width: 6),
         Text(
           label,
-          style: const TextStyle(fontSize: 12, color: Color(0xFF2E2739)),
+          style: const TextStyle(fontSize: 12, color: AppColors.primaryDark),
         ),
       ],
     );
@@ -515,52 +517,51 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
         return Chip(
           label: Text(
             '${s.c + 1} / ${s.r + 1} row',
-            style: const TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 10),
           ),
-          deleteIcon: const Icon(Icons.close, size: 16, color: Color(0xFF2E2739)),
+          deleteIcon: const Icon(Icons.close, size: 16, color: AppColors.primaryDark),
           onDeleted: () => _removeSeat(s.r, s.c),
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          backgroundColor: Colors.white,
-          side: const BorderSide(color: Color(0xFFDBDBDF)),
+          backgroundColor: AppColors.borderLight,
+          side: const BorderSide(color: AppColors.borderLight),
         );
       }).toList(),
     );
   }
 
   Widget _buildBottomBar() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 8,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Total Price',
-                style: TextStyle(fontSize: 14, color: Color(0xFF2E2739)),
-              ),
-              Text(
-                '\$ $_totalPrice',
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF2E2739),
+          Container(
+            width: 105,
+            height: 50,
+            decoration: BoxDecoration(
+              color: AppColors.borderLight,
+              borderRadius: BorderRadius.circular(10)
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: .center,
+              children: [
+                const Text(
+                  'Total Price',
+                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: AppColors.primaryDark),
                 ),
-              ),
-            ],
+                Text(
+                  '\$ $_totalPrice',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primaryDark,
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -577,7 +578,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
                         );
                       },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF60C2FF),
+                  backgroundColor: AppColors.accentBlue,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -606,7 +607,7 @@ class _ScreenCurvePainter extends CustomPainter {
     canvas.drawPath(
       path,
       Paint()
-        ..color = const Color(0xFF60C2FF)
+        ..color = AppColors.accentBlue
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2,
     );

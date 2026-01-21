@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/app_assets.dart';
+import '../../core/constants/app_colors.dart';
 import '../../domain/entities/genre_entity.dart';
 import '../../domain/entities/movie_entity.dart';
 import '../providers/search_provider.dart';
@@ -61,7 +62,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6FA),
+      backgroundColor: AppColors.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -73,7 +74,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 builder: (context, searchProvider, child) {
                   if (searchProvider.isLoadingGenres) {
                     return const LoadingWidget.fullScreen(
-                      color: Color(0xFF2E2739),
+                      color: AppColors.primaryDark,
                       message: 'Loading categories...',
                     );
                   }
@@ -118,18 +119,18 @@ class _SearchScreenState extends State<SearchScreen> {
                   hintText: 'TV shows, movies and more',
                   hintStyle: const TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF999999),
+                    color: AppColors.textMuted,
                   ),
                   prefixIcon: const Icon(
                     Icons.search,
-                    color: Color(0xFF999999),
+                    color: AppColors.textMuted,
                     size: 20,
                   ),
                   suffixIcon: _searchController.text.isNotEmpty
                       ? IconButton(
                           icon: const Icon(
                             Icons.close,
-                            color: Color(0xFF999999),
+                            color: AppColors.textMuted,
                             size: 20,
                           ),
                           onPressed: () {
@@ -180,7 +181,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 searchProvider.loadGenres();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF2E2739),
+                backgroundColor: AppColors.primaryDark,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 12,
@@ -240,7 +241,7 @@ class _SearchScreenState extends State<SearchScreen> {
           borderRadius: BorderRadius.circular(16),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: AppColors.borderLight,
               borderRadius: BorderRadius.circular(16),
             ),
             child: Stack(
@@ -277,7 +278,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFFFFFFFF),
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -297,8 +298,8 @@ class _SearchScreenState extends State<SearchScreen> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Colors.grey[400]!,
-            Colors.grey[600]!,
+            AppColors.borderLight,
+            AppColors.textMuted,
           ],
         ),
       ),
@@ -309,7 +310,7 @@ class _SearchScreenState extends State<SearchScreen> {
     if (searchProvider.isSearching) {
       return const Center(
         child: LoadingWidget.medium(
-          color: Color(0xFF2E2739),
+          color: AppColors.primaryDark,
         ),
       );
     }
@@ -320,7 +321,7 @@ class _SearchScreenState extends State<SearchScreen> {
           'No results found',
           style: TextStyle(
             fontSize: 16,
-            color: Color(0xFF000000),
+            color: AppColors.primaryDark,
           ),
         ),
       );
@@ -336,7 +337,7 @@ class _SearchScreenState extends State<SearchScreen> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF000000),
+              color: AppColors.primaryDark,
             ),
           ),
         ),
@@ -371,7 +372,7 @@ class _SearchScreenState extends State<SearchScreen> {
               width: 80,
               height: 120,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: AppColors.borderLight,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: movie.posterImageUrl.isNotEmpty
@@ -380,7 +381,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
-                          color: Colors.grey[300],
+                          color: AppColors.borderLight,
                           child: const Icon(Icons.movie),
                         );
                       },
@@ -388,13 +389,13 @@ class _SearchScreenState extends State<SearchScreen> {
                         if (loadingProgress == null) return child;
                         return const Center(
                           child: LoadingWidget.small(
-                            color: Color(0xFF2E2739),
+                            color: AppColors.primaryDark,
                           ),
                         );
                       },
                     )
                   : Container(
-                      color: Colors.grey[300],
+                      color: AppColors.borderLight,
                       child: const Icon(Icons.movie),
                     ),
             ),
@@ -410,7 +411,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF000000),
+                    color: AppColors.primaryDark,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -421,7 +422,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     genreName,
                     style: const TextStyle(
                       fontSize: 12,
-                      color: Color(0xFF999999),
+                      color: AppColors.textMuted,
                     ),
                   ),
                 ],
@@ -432,7 +433,7 @@ class _SearchScreenState extends State<SearchScreen> {
           IconButton(
             icon: const Icon(
               Icons.more_vert,
-              color: Color(0xFF999999),
+                color: AppColors.textMuted,
               size: 20,
             ),
             onPressed: () => _navigateToMovieDetail(movie),
@@ -455,7 +456,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Container(
       height: 80,
       decoration: const BoxDecoration(
-        color: Color(0xFF2E2739),
+        color: AppColors.primaryDark,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -479,7 +480,7 @@ class _SearchScreenState extends State<SearchScreen> {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: isActive ? Colors.white : Colors.grey[600],
+            color: isActive ? Colors.white : AppColors.textMuted,
           ),
         ),
       ],

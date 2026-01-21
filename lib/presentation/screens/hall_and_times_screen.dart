@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_assets.dart';
+import '../../core/constants/app_colors.dart';
 import 'seat_selection_screen.dart';
 
 /// Dummy screening: time, cinema, hall, price, bonus.
@@ -117,7 +118,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6FA),
+      backgroundColor: AppColors.surface,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -134,7 +135,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF2E2739),
+                        color: AppColors.primaryDark,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -145,7 +146,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF2E2739),
+                        color: AppColors.primaryDark,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -167,7 +168,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
       child: Row(
         children: [
           IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF2E2739), size: 20),
+            icon: const Icon(Icons.arrow_back_ios, color: AppColors.primaryDark, size: 20),
             onPressed: () => Navigator.of(context).pop(),
           ),
           Expanded(
@@ -178,7 +179,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF2E2739),
+                    color: AppColors.primaryDark,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -187,7 +188,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
                   'In Theaters December 22, 2021',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF60C2FF),
+                    color: AppColors.accentBlue,
                   ),
                 ),
               ],
@@ -220,10 +221,10 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 decoration: BoxDecoration(
-                  color: isSelected ? const Color(0xFF60C2FF) : Colors.white,
+                  color: isSelected ? AppColors.accentBlue : Colors.white,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: isSelected ? const Color(0xFF60C2FF) : const Color(0xFFDBDBDF),
+                    color: isSelected ? AppColors.accentBlue : AppColors.borderLight,
                     width: 1,
                   ),
                 ),
@@ -233,7 +234,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: isSelected ? Colors.white : const Color(0xFF2E2739),
+                    color: isSelected ? Colors.white : AppColors.primaryDark,
                   ),
                 ),
               ),
@@ -250,9 +251,8 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
       return const Center(
         child: Padding(
           padding: EdgeInsets.all(24),
-          child: Text('No screenings for this date', style: TextStyle(color: Color(0xFF2E2739))),
-        ),
-      );
+          child: Text('No screenings for this date', style: TextStyle(color: AppColors.primaryDark))),
+        );
     }
     return SizedBox(
       height: 220,
@@ -273,7 +273,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: isSelected ? const Color(0xFF60C2FF) : const Color(0xFFDBDBDF),
+                    color: isSelected ? AppColors.accentBlue : AppColors.borderLight,
                     width: isSelected ? 2 : 1,
                   ),
                 ),
@@ -285,7 +285,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF2E2739),
+                        color: AppColors.primaryDark,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -295,7 +295,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
                     const SizedBox(height: 8),
                     RichText(
                       text: TextSpan(
-                        style: const TextStyle(fontSize: 12, color: Color(0xFF2E2739), fontWeight: FontWeight.w500),
+                        style: const TextStyle(fontSize: 12, color: AppColors.primaryDark, fontWeight: FontWeight.w500),
                         children: [
                           const TextSpan(text: 'From '),
                           TextSpan(text: '${s.price}\$', style: const TextStyle(fontWeight: FontWeight.w700)),
@@ -315,16 +315,16 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
   }
 
   Widget _buildMiniSeatMap(List<List<int>> grid) {
-    const cRegular = Color(0xFF60C2FF);
-    const cVip = Color(0xFF564CA3);
-    const cBooked = Color(0xFFDBDBDF);
+    const cRegular = AppColors.accentBlue;
+    const cVip = AppColors.accentPurple;
+    const cBooked = AppColors.borderLight;
     final rows = grid.length;
     final cols = rows > 0 ? grid[0].length : 0;
     if (rows == 0 || cols == 0) return const SizedBox.shrink();
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: Container(
-        color: const Color(0xFFF6F6FA),
+        color: AppColors.surface,
         child: Column(
           children: [
             SizedBox(
@@ -381,7 +381,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
         child: ElevatedButton(
           onPressed: _currentScreenings.isEmpty ? null : _onSelectSeats,
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF60C2FF),
+            backgroundColor: AppColors.accentBlue,
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             elevation: 0,
@@ -396,7 +396,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
 class _MiniScreenArcPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    const cRegular = Color(0xFF60C2FF);
+    const cRegular = AppColors.accentBlue;
     final path = Path()
       ..moveTo(0, size.height)
       ..quadraticBezierTo(size.width / 2, 0, size.width, size.height);

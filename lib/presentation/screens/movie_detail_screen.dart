@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../core/constants/app_colors.dart';
 import '../../domain/entities/movie_entity.dart';
 import '../../domain/entities/movie_detail_entity.dart';
 import '../providers/movie_detail_provider.dart';
@@ -33,12 +34,12 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6FA),
+      backgroundColor: AppColors.surface,
       body: Consumer<MovieDetailProvider>(
         builder: (context, provider, child) {
           if (provider.isLoading) {
             return const LoadingWidget.fullScreen(
-              color: Color(0xFF2E2739),
+              color: AppColors.primaryDark,
               message: 'Loading movie details...',
             );
           }
@@ -95,7 +96,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 provider.loadMovieDetails(widget.movie.id);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF2E2739),
+                backgroundColor: AppColors.primaryDark,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 12,
@@ -144,14 +145,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
-                        color: Colors.grey[900],
+                        color: AppColors.primaryDark,
                         child: const Icon(Icons.movie, color: Colors.white70),
                       );
                     },
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
                       return Container(
-                        color: Colors.grey[900],
+                        color: AppColors.primaryDark,
                         child: const Center(
                           child: LoadingWidget.medium(color: Colors.white70),
                         ),
@@ -159,7 +160,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     },
                   )
                 : Container(
-                    color: Colors.grey[900],
+                    color: AppColors.primaryDark,
                     child: const Icon(Icons.movie, color: Colors.white70),
                   ),
             // Dark overlay
@@ -188,7 +189,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFFFD700), // Gold color
+                      color: AppColors.accentGold,
                       shadows: [
                         Shadow(
                           color: Colors.black54,
@@ -234,7 +235,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF61C3F2), // Light blue
+                        backgroundColor: AppColors.accentBlue,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -276,7 +277,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF564CA3), // Dark gray/purple
+                        backgroundColor: AppColors.accentPurple,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -295,7 +296,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
 
   Widget _buildBottomSection(movieDetail, MovieDetailProvider provider) {
     return Container(
-      color: const Color(0xFFF6F6FA),
+      color: AppColors.surface,
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -307,7 +308,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF000000),
+                color: AppColors.primaryDark,
               ),
             ),
             const SizedBox(height: 12),
@@ -318,10 +319,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 final index = entry.key;
                 final genre = entry.value;
                 final colors = [
-                  const Color(0xFF15D2BC), // Light green
-                  const Color(0xFFE26CA5), // Pink
-                  const Color(0xFF564CA3), // Purple
-                  const Color(0xFFCD9D0F), // Orange
+                  AppColors.accentTeal,
+                  AppColors.accentPink,
+                  AppColors.accentPurple,
+                  AppColors.accentGold,
                 ];
                 return Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -348,7 +349,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF000000),
+              color: AppColors.primaryDark,
             ),
           ),
           const SizedBox(height: 12),
@@ -356,7 +357,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             movieDetail.overview,
             style: const TextStyle(
               fontSize: 14,
-              color: Color(0xFF666666),
+              color: AppColors.textMuted,
               height: 1.5,
             ),
           ),

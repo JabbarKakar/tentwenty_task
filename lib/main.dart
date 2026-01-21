@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'core/constants/app_assets.dart';
+import 'core/constants/app_colors.dart';
 import 'core/di/injection_container.dart';
 import 'presentation/screens/watch_screen.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: AppAssets.fontFamilyPoppins,
           textTheme: ThemeData.light().textTheme.apply(fontFamily: AppAssets.fontFamilyPoppins),
-          primarySwatch: Colors.blue,
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.accentBlue, brightness: Brightness.light),
         ),
         home: const WatchScreen(),
       ),

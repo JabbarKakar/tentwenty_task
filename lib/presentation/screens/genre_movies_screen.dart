@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/app_assets.dart';
+import '../../core/constants/app_colors.dart';
 import '../../core/errors/failures.dart';
 import '../../core/utils/result.dart';
 import '../../domain/entities/genre_entity.dart';
@@ -133,12 +134,12 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6FA),
+      backgroundColor: AppColors.surface,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF6F6FA),
+        backgroundColor: AppColors.surface,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF000000)),
+          icon: const Icon(Icons.arrow_back, color: AppColors.primaryDark),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
@@ -146,13 +147,13 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF000000),
+            color: AppColors.primaryDark,
           ),
         ),
       ),
       body: _isLoading
           ? const LoadingWidget.fullScreen(
-              color: Color(0xFF2E2739),
+              color: AppColors.primaryDark,
               message: 'Loading movies...',
             )
           : _error != null
@@ -189,7 +190,7 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
             ElevatedButton(
               onPressed: _loadMovies,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF2E2739),
+                backgroundColor: AppColors.primaryDark,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                   vertical: 12,
@@ -216,7 +217,7 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
         'No movies found in this category',
         style: TextStyle(
           fontSize: 16,
-          color: Color(0xFF000000),
+          color: AppColors.primaryDark,
         ),
       ),
     );
@@ -247,7 +248,7 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
                 padding: EdgeInsets.all(16.0),
                 child: Center(
                   child: LoadingWidget.medium(
-                    color: Color(0xFF2E2739),
+                    color: AppColors.primaryDark,
                   ),
                 ),
               ),
@@ -259,7 +260,7 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
                     'No more movies to load',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Color(0xFF000000),
+                      color: AppColors.primaryDark,
                     ),
                   ),
                 ),
@@ -289,24 +290,24 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
-                          color: Colors.grey[300],
+                          color: AppColors.borderLight,
                           child: const Icon(Icons.error),
                         );
                       },
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
                         return Container(
-                          color: Colors.grey[300],
+                          color: AppColors.borderLight,
                           child: const Center(
                             child: LoadingWidget.small(
-                              color: Color(0xFF2E2739),
+                              color: AppColors.primaryDark,
                             ),
                           ),
                         );
                       },
                     )
                   : Container(
-                      color: Colors.grey[300],
+                      color: AppColors.borderLight,
                       child: const Icon(Icons.movie),
                     ),
             ),
@@ -325,7 +326,7 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFFFFFFFF),
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -354,24 +355,24 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
-                          color: Colors.grey[300],
+                          color: AppColors.borderLight,
                           child: const Icon(Icons.error),
                         );
                       },
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
                         return Container(
-                          color: Colors.grey[300],
+                          color: AppColors.borderLight,
                           child: const Center(
                             child: LoadingWidget.small(
-                              color: Color(0xFF2E2739),
+                              color: AppColors.primaryDark,
                             ),
                           ),
                         );
                       },
                     )
                   : Container(
-                      color: Colors.grey[300],
+                      color: AppColors.borderLight,
                       child: const Icon(Icons.movie),
                     ),
             ),
@@ -390,7 +391,7 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFFFFFFFF),
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -404,7 +405,7 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
     return Container(
       height: 80,
       decoration: const BoxDecoration(
-        color: Color(0xFF2E2739),
+        color: AppColors.primaryDark,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -428,7 +429,7 @@ class _GenreMoviesScreenState extends State<GenreMoviesScreen> {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: isActive ? Colors.white : Colors.grey[600],
+            color: isActive ? Colors.white : AppColors.textMuted,
           ),
         ),
       ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'app_colors.dart';
+
 /// Central definition of app image and SVG asset paths.
 /// Use [navIcon] to render bottom nav bar icons with active/inactive tint.
 abstract class AppAssets {
@@ -44,7 +46,7 @@ abstract class AppAssets {
       width: size,
       height: size,
       colorFilter: ColorFilter.mode(
-        isActive ? Colors.white : Colors.grey[600]!,
+        isActive ? Colors.white : AppColors.textMuted,
         BlendMode.srcIn,
       ),
     );

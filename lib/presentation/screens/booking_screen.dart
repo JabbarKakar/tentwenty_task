@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/constants/app_colors.dart';
 import '../../domain/entities/movie_entity.dart';
 import '../widgets/loading_widget.dart';
 
@@ -13,12 +14,12 @@ class BookingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6FA),
+      backgroundColor: AppColors.surface,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF6F6FA),
+        backgroundColor: AppColors.surface,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF000000)),
+          icon: const Icon(Icons.arrow_back, color: AppColors.primaryDark),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
@@ -26,7 +27,7 @@ class BookingScreen extends StatelessWidget {
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF000000),
+            color: AppColors.primaryDark,
           ),
         ),
       ),
@@ -50,24 +51,24 @@ class BookingScreen extends StatelessWidget {
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
-                            color: Colors.grey[300],
+                            color: AppColors.borderLight,
                             child: const Icon(Icons.error),
                           );
                         },
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
                           return Container(
-                            color: Colors.grey[300],
+                            color: AppColors.borderLight,
                             child: const Center(
                               child: LoadingWidget.medium(
-                                color: Color(0xFF2E2739),
+                                color: AppColors.primaryDark,
                               ),
                             ),
                           );
                         },
                       )
                     : Container(
-                        color: Colors.grey[300],
+                        color: AppColors.borderLight,
                         child: const Icon(Icons.movie),
                       ),
               ),
@@ -80,7 +81,7 @@ class BookingScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF000000),
+                  color: AppColors.primaryDark,
                 ),
               ),
               const SizedBox(height: 8),
@@ -88,7 +89,7 @@ class BookingScreen extends StatelessWidget {
                 movie.overview!,
                 style: const TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF000000),
+                  color: AppColors.primaryDark,
                 ),
               ),
               const SizedBox(height: 24),
@@ -98,7 +99,7 @@ class BookingScreen extends StatelessWidget {
                 'Release Date: ${movie.releaseDate}',
                 style: const TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF000000),
+                  color: AppColors.primaryDark,
                 ),
               ),
               const SizedBox(height: 24),
@@ -116,7 +117,7 @@ class BookingScreen extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2E2739),
+                  backgroundColor: AppColors.primaryDark,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -127,7 +128,7 @@ class BookingScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFFFFFFFF),
+                    color: Colors.white,
                   ),
                 ),
               ),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
+import '../../core/constants/app_colors.dart';
 import '../../domain/entities/video_entity.dart';
 import '../widgets/loading_widget.dart';
 
@@ -226,7 +227,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     final canOpenExternally = widget.video.externalUrl.isNotEmpty;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.surface,
       body: Stack(
         children: [
           Center(
@@ -234,24 +235,24 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.play_circle_outline,
                           size: 64,
-                          color: Colors.white70,
+                          color: AppColors.textMuted,
                         ),
                         const SizedBox(height: 16),
-                        const Text(
+                        Text(
                           'Unable to load trailer',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: AppColors.primaryDark,
                             fontSize: 16,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           widget.video.name,
-                          style: const TextStyle(
-                            color: Colors.white70,
+                          style: TextStyle(
+                            color: AppColors.textMuted,
                             fontSize: 14,
                           ),
                           textAlign: TextAlign.center,
@@ -269,10 +270,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   vertical: 12,
                                 ),
                               ),
-                              child: const Text(
+                              child: Text(
                                 'Done',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: AppColors.primaryDark,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -306,7 +307,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   : _isInitialized && _controller != null
                       ? WebViewWidget(controller: _controller!)
                       : const LoadingWidget.fullScreen(
-                          color: Colors.white70,
+                          color: AppColors.primaryDark,
                           message: 'Loading trailer...',
                         ),
             ),
@@ -314,7 +315,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             top: 16,
             right: 16,
             child: IconButton(
-              icon: const Icon(Icons.close, color: Colors.white, size: 28),
+              icon: const Icon(Icons.close, color: AppColors.primaryDark, size: 28),
               onPressed: _onDone,
             ),
           ),
