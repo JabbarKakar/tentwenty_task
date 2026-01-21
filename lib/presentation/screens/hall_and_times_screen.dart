@@ -4,14 +4,14 @@ import '../../core/constants/app_colors.dart';
 import 'seat_selection_screen.dart';
 
 /// Dummy screening: time, cinema, hall, price, bonus.
-/// miniMap: 0=regular, 1=VIP, 2=booked (for small preview)
+/// miniMap: 10x28, same layout as seat_selection_screen. 0=blue, 1=VIP, 2=booked, 3=teal, 4=pink, null=empty.
 class _Screening {
   final String time;
   final String cinema;
   final String hall;
   final int price;
   final int bonus;
-  final List<List<int>> miniMap;
+  final List<List<int?>> miniMap;
 
   _Screening({
     required this.time,
@@ -23,48 +23,108 @@ class _Screening {
   });
 }
 
+/// 10x28 layout matching seat_selection_screen. Values: 0=avail, 1=unavail, 2=selected, 3=VIP, null=empty.
+List<List<int?>> _fullSeatLayout() {
+  final g = List.generate(10, (_) => List<int?>.filled(28, 0));
+  g[0][0] = null; g[0][1] = null; g[0][2] = 1; g[0][3] = 1; g[0][4] = 1;
+  for (int i = 0; i < 4; i++) g[0][5 + i] = 1;
+  for (int i = 0; i < 2; i++) g[0][9 + i] = 0;
+  for (int i = 0; i < 12; i++) g[0][11 + i] = 1;
+  g[0][23] = 1; g[0][24] = 1; g[0][25] = null; g[0][26] = null; g[0][27] = null;
+  for (int i = 0; i < 5; i++) g[1][i] = 0;
+  for (int i = 0; i < 4; i++) g[1][5 + i] = 1;
+  for (int i = 0; i < 4; i++) g[1][9 + i] = 0;
+  for (int i = 0; i < 4; i++) g[1][13 + i] = 1;
+  for (int i = 0; i < 4; i++) g[1][17 + i] = 0;
+  for (int i = 0; i < 2; i++) g[1][21 + i] = 1;
+  for (int i = 0; i < 4; i++) g[1][23 + i] = 0;
+  g[1][27] = null;
+  for (int i = 0; i < 5; i++) g[2][i] = 0;
+  for (int i = 0; i < 4; i++) g[2][5 + i] = 1;
+  g[2][9] = 2; g[2][10] = 1;
+  for (int i = 0; i < 4; i++) g[2][11 + i] = 0;
+  for (int i = 0; i < 2; i++) g[2][15 + i] = 1;
+  for (int i = 0; i < 4; i++) g[2][17 + i] = 0;
+  for (int i = 0; i < 2; i++) g[2][21 + i] = 1;
+  g[2][23] = 0; g[2][24] = 0; g[2][25] = 1; g[2][26] = 1; g[2][27] = 0;
+  for (int i = 0; i < 5; i++) g[3][i] = 1;
+  for (int i = 0; i < 4; i++) { g[3][5 + i] = 0; g[3][9 + i] = 1; g[3][13 + i] = 0; g[3][17 + i] = 1; }
+  for (int i = 0; i < 2; i++) g[3][21 + i] = 0;
+  for (int i = 0; i < 5; i++) g[3][23 + i] = 1;
+  for (int i = 0; i < 5; i++) g[4][i] = 0;
+  for (int i = 0; i < 4; i++) { g[4][5 + i] = 1; g[4][9 + i] = 0; g[4][13 + i] = 1; g[4][17 + i] = 0; }
+  for (int i = 0; i < 2; i++) g[4][21 + i] = 1;
+  for (int i = 0; i < 4; i++) g[4][23 + i] = 0;
+  g[4][27] = 1;
+  for (int i = 0; i < 5; i++) g[5][i] = 1;
+  for (int i = 0; i < 4; i++) { g[5][5 + i] = 0; g[5][9 + i] = 1; g[5][13 + i] = 0; g[5][17 + i] = 1; }
+  for (int i = 0; i < 2; i++) g[5][21 + i] = 0;
+  for (int i = 0; i < 5; i++) g[5][23 + i] = 1;
+  for (int i = 0; i < 5; i++) g[6][i] = 0;
+  for (int i = 0; i < 4; i++) { g[6][5 + i] = 1; g[6][9 + i] = 0; g[6][13 + i] = 1; g[6][17 + i] = 0; }
+  for (int i = 0; i < 2; i++) g[6][21 + i] = 1;
+  for (int i = 0; i < 4; i++) g[6][23 + i] = 0;
+  g[6][27] = 1;
+  for (int i = 0; i < 5; i++) g[7][i] = 1;
+  for (int i = 0; i < 4; i++) { g[7][5 + i] = 0; g[7][9 + i] = 1; g[7][13 + i] = 0; g[7][17 + i] = 1; }
+  for (int i = 0; i < 2; i++) g[7][21 + i] = 0;
+  for (int i = 0; i < 5; i++) g[7][23 + i] = 1;
+  for (int i = 0; i < 5; i++) g[8][i] = 0;
+  for (int i = 0; i < 4; i++) { g[8][5 + i] = 1; g[8][9 + i] = 0; g[8][13 + i] = 1; g[8][17 + i] = 0; }
+  for (int i = 0; i < 2; i++) g[8][21 + i] = 1;
+  for (int i = 0; i < 4; i++) g[8][23 + i] = 0;
+  g[8][27] = 1;
+  for (int c = 0; c < 28; c++) g[9][c] = 3;
+  return g;
+}
+
+/// Maps full layout (0,1,2,3,null) to mini: 0=blue, 1=VIP, 2=booked, 3=teal, 4=pink, null=empty.
+List<List<int?>> _toMiniGrid(List<List<int?>> full) {
+  final m = List.generate(10, (r) => List<int?>.generate(28, (c) {
+    final v = full[r][c];
+    if (v == null) return null;
+    if (v == 3) return 1; // VIP (purple)
+    if (v == 1 || v == 2) return 2; // booked (light gray)
+    // available: mix of blue, teal, pink per screenshot
+    final k = (r * 28 + c) % 5;
+    return k == 0 ? 3 : (k == 1 ? 4 : 0);
+  }));
+  return m;
+}
+
+List<List<int?>> _getMiniLayout() => _toMiniGrid(_fullSeatLayout());
+
 /// Dummy data: dates and per-date screenings.
 void _fillDummy(Map<int, List<_Screening>> m) {
-  const miniRegular = [
-    [0, 0, 1, 2, 0, 2, 0, 0],
-    [0, 2, 0, 0, 2, 0, 1, 0],
-    [2, 0, 0, 1, 0, 0, 2, 0],
-    [0, 0, 2, 0, 0, 1, 0, 0],
-  ];
-  const miniAlt = [
-    [0, 2, 0, 1, 0, 0, 2, 0],
-    [1, 0, 0, 2, 0, 1, 0, 0],
-    [0, 0, 1, 0, 2, 0, 0, 1],
-    [2, 0, 0, 0, 1, 0, 2, 0],
-  ];
+  final mini = _getMiniLayout();
   m[0] = [
-    _Screening(time: '12:30', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: miniRegular),
-    _Screening(time: '13:30', cinema: 'Cinetech', hall: 'Hall 2', price: 75, bonus: 3000, miniMap: miniAlt),
-    _Screening(time: '15:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: miniRegular),
-    _Screening(time: '18:00', cinema: 'Cinetech', hall: 'Hall 3', price: 60, bonus: 2800, miniMap: miniAlt),
+    _Screening(time: '12:30', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: mini),
+    _Screening(time: '13:30', cinema: 'Cinetech', hall: 'Hall 2', price: 75, bonus: 3000, miniMap: mini),
+    _Screening(time: '15:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: mini),
+    _Screening(time: '18:00', cinema: 'Cinetech', hall: 'Hall 3', price: 60, bonus: 2800, miniMap: mini),
   ];
   m[1] = [
-    _Screening(time: '10:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: miniRegular),
-    _Screening(time: '14:00', cinema: 'Cinetech', hall: 'Hall 3', price: 60, bonus: 2800, miniMap: miniAlt),
-    _Screening(time: '17:30', cinema: 'Cinetech', hall: 'Hall 2', price: 75, bonus: 3000, miniMap: miniRegular),
+    _Screening(time: '10:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: mini),
+    _Screening(time: '14:00', cinema: 'Cinetech', hall: 'Hall 3', price: 60, bonus: 2800, miniMap: mini),
+    _Screening(time: '17:30', cinema: 'Cinetech', hall: 'Hall 2', price: 75, bonus: 3000, miniMap: mini),
   ];
   m[2] = [
-    _Screening(time: '11:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: miniAlt),
-    _Screening(time: '14:30', cinema: 'Cinetech', hall: 'Hall 2', price: 75, bonus: 3000, miniMap: miniRegular),
+    _Screening(time: '11:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: mini),
+    _Screening(time: '14:30', cinema: 'Cinetech', hall: 'Hall 2', price: 75, bonus: 3000, miniMap: mini),
   ];
   m[3] = [
-    _Screening(time: '12:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: miniRegular),
-    _Screening(time: '15:30', cinema: 'Cinetech', hall: 'Hall 3', price: 60, bonus: 2800, miniMap: miniAlt),
-    _Screening(time: '19:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: miniRegular),
+    _Screening(time: '12:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: mini),
+    _Screening(time: '15:30', cinema: 'Cinetech', hall: 'Hall 3', price: 60, bonus: 2800, miniMap: mini),
+    _Screening(time: '19:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: mini),
   ];
   m[4] = [
-    _Screening(time: '13:00', cinema: 'Cinetech', hall: 'Hall 2', price: 75, bonus: 3000, miniMap: miniAlt),
-    _Screening(time: '16:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: miniRegular),
+    _Screening(time: '13:00', cinema: 'Cinetech', hall: 'Hall 2', price: 75, bonus: 3000, miniMap: mini),
+    _Screening(time: '16:00', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: mini),
   ];
   m[5] = [
-    _Screening(time: '10:30', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: miniRegular),
-    _Screening(time: '12:30', cinema: 'Cinetech', hall: 'Hall 3', price: 60, bonus: 2800, miniMap: miniAlt),
-    _Screening(time: '18:30', cinema: 'Cinetech', hall: 'Hall 2', price: 75, bonus: 3000, miniMap: miniRegular),
+    _Screening(time: '10:30', cinema: 'Cinetech', hall: 'Hall 1', price: 50, bonus: 2500, miniMap: mini),
+    _Screening(time: '12:30', cinema: 'Cinetech', hall: 'Hall 3', price: 60, bonus: 2800, miniMap: mini),
+    _Screening(time: '18:30', cinema: 'Cinetech', hall: 'Hall 2', price: 75, bonus: 3000, miniMap: mini),
   ];
 }
 
@@ -125,37 +185,39 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
           children: [
             _buildHeader(),
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+              child: Container(
+                color: AppColors.borderLight.withOpacity(0.3),
+                padding: const EdgeInsets.fromLTRB(16, 30, 16, 0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
-                      'Date',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primaryDark,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Date',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.primaryDark,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            _buildDateChips(),
+                            const SizedBox(height: 24),
+                            _buildHallTimeCards(),
+                            const SizedBox(height: 16),
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 12),
-                    _buildDateChips(),
-                    const SizedBox(height: 24),
-                    const Text(
-                      'Hall & Time',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primaryDark,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    _buildHallTimeCards(),
+                    _buildSelectSeatsButton(),
                   ],
                 ),
               ),
             ),
-            _buildSelectSeatsButton(),
           ],
         ),
       ),
@@ -202,7 +264,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
 
   Widget _buildDateChips() {
     return SizedBox(
-      height: 44,
+      height: 38,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: _dates.length,
@@ -219,9 +281,9 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
                 });
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: isSelected ? AppColors.accentBlue : Colors.white,
+                  color: isSelected ? AppColors.accentBlue : AppColors.borderLight,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
                     color: isSelected ? AppColors.accentBlue : AppColors.borderLight,
@@ -232,8 +294,8 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
                 child: Text(
                   _dates[i],
                   style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     color: isSelected ? Colors.white : AppColors.primaryDark,
                   ),
                 ),
@@ -255,7 +317,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
         );
     }
     return SizedBox(
-      height: 220,
+      height: 230,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: list.length,
@@ -266,46 +328,63 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
             padding: const EdgeInsets.only(right: 16),
             child: GestureDetector(
               onTap: () => setState(() => _selectedScreeningIndex = i),
-              child: Container(
-                width: 200,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: isSelected ? AppColors.accentBlue : AppColors.borderLight,
-                    width: isSelected ? 2 : 1,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      style: const TextStyle(color: AppColors.primaryDark),
+                      children: [
+                        TextSpan(
+                          text: '${s.time} ',
+                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                        ),
+                        TextSpan(
+                          text: '${s.cinema} + ${s.hall}',
+                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${s.time} ${s.cinema} + ${s.hall}',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primaryDark,
+                  const SizedBox(height: 8),
+                  Container(
+                    width: 250,
+                    height: 172,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: isSelected ? AppColors.accentBlue : AppColors.borderLight,
+                        width: 1.5,
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Expanded(
-                      child: _buildMiniSeatMap(s.miniMap),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: .center,
+                      children: [
+                        Expanded(
+                          child: Center(child: Align(
+                              alignment: .center,
+                              child: _buildMiniSeatMap(s.miniMap))),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 8),
-                    RichText(
-                      text: TextSpan(
-                        style: const TextStyle(fontSize: 12, color: AppColors.primaryDark, fontWeight: FontWeight.w500),
-                        children: [
-                          const TextSpan(text: 'From '),
-                          TextSpan(text: '${s.price}\$', style: const TextStyle(fontWeight: FontWeight.w700)),
-                          const TextSpan(text: ' or '),
-                          TextSpan(text: '${s.bonus} bonus', style: const TextStyle(fontWeight: FontWeight.w700)),
-                        ],
-                      ),
+                  ),
+                  const SizedBox(height: 6),
+                  RichText(
+                    text: TextSpan(
+                      style: const TextStyle(fontSize: 12, color: AppColors.primaryDark, fontWeight: FontWeight.w500),
+                      children: [
+                        const TextSpan(text: 'From '),
+                        TextSpan(text: '${s.price}\$', style: const TextStyle(fontWeight: FontWeight.w700)),
+                        const TextSpan(text: ' or '),
+                        TextSpan(text: '${s.bonus} bonus', style: const TextStyle(fontWeight: FontWeight.w700)),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );
@@ -314,54 +393,68 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
     );
   }
 
-  Widget _buildMiniSeatMap(List<List<int>> grid) {
+  Widget _buildMiniSeatMap(List<List<int?>> grid) {
     const cRegular = AppColors.accentBlue;
     const cVip = AppColors.accentPurple;
     const cBooked = AppColors.borderLight;
-    final rows = grid.length;
-    final cols = rows > 0 ? grid[0].length : 0;
-    if (rows == 0 || cols == 0) return const SizedBox.shrink();
+    const int rows = 10;
+    const int cols = 28;
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: Container(
-        color: AppColors.surface,
+        color: Colors.white,
         child: Column(
           children: [
             SizedBox(
-              height: 6,
+              height: 15,
               width: double.infinity,
               child: CustomPaint(painter: _MiniScreenArcPainter()),
             ),
             Expanded(
               child: LayoutBuilder(
                 builder: (context, c) {
-                  final cellW = c.maxWidth / cols;
-                  final cellH = c.maxHeight / rows;
-                  final seatSize = (cellW < cellH ? cellW : cellH) * 0.85;
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: List.generate(rows, (i) => Row(
+                  final cellSize = (c.maxWidth / cols) < (c.maxHeight / rows)
+                      ? c.maxWidth / cols
+                      : c.maxHeight / rows;
+                  final seatSize = cellSize * 0.88;
+                  return Center(
+                    child: Column(
+                      // mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: List.generate(cols, (j) {
-                        Color color;
-                        switch (grid[i][j]) {
-                          case 0: color = cRegular; break;
-                          case 1: color = cVip; break;
-                          default: color = cBooked;
-                        }
-                        return Padding(
-                          padding: const EdgeInsets.all(1),
-                          child: AppAssets.svgWithColor(
-                            AppAssets.iconsSeat,
-                            color: color,
-                            width: seatSize,
-                            height: seatSize,
-                          ),
-                        );
-                      }),
-                    )),
+                      crossAxisAlignment: .center,
+                      children: List.generate(rows, (i) => Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: .center,
+                        children: List.generate(cols, (j) {
+                          final v = i < grid.length && j < grid[i].length ? grid[i][j] : null;
+                          if (v == null) {
+                            return SizedBox(width: cellSize, height: cellSize);
+                          }
+                          Color color;
+                          switch (v) {
+                            case 0: color = cRegular; break;
+                            case 1: color = cVip; break;
+                            case 2: color = cBooked; break;
+                            case 3: color = AppColors.accentTeal; break;
+                            case 4: color = AppColors.accentPink; break;
+                            default: color = cBooked;
+                          }
+                          return SizedBox(
+                            width: cellSize,
+                            height: cellSize,
+                            child: Center(
+                              child: AppAssets.svgWithColor(
+                                AppAssets.iconsSeat,
+                                color: color,
+                                width: seatSize,
+                                height: seatSize,
+                              ),
+                            ),
+                          );
+                        }),
+                      )),
+                    ),
                   );
                 },
               ),
@@ -374,7 +467,7 @@ class _HallAndTimesScreenState extends State<HallAndTimesScreen> {
 
   Widget _buildSelectSeatsButton() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      padding: const EdgeInsets.only(top: 12, bottom: 24),
       child: SizedBox(
         width: double.infinity,
         height: 56,
