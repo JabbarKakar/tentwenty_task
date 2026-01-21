@@ -243,13 +243,25 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
             _buildHeader(),
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildScreenCurve(),
-                    const SizedBox(height: 8),
-                    _buildSeatMap(),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.borderLight.withOpacity(.3),
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _buildScreenCurve(),
+                          const SizedBox(height: 8),
+                          _buildSeatMap(),
+                        ],
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     _buildLegend(),
                     const SizedBox(height: 12),
@@ -379,7 +391,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
         child: Container(
           width: 36,
           height: 36,
-          decoration: BoxDecoration(border: Border.all(color: AppColors.borderLight), shape: .circle),
+          decoration: BoxDecoration(border: Border.all(color: AppColors.borderLight), shape: BoxShape.circle),
           child: Icon(icon, size: 20, color: AppColors.primaryDark),
         ),
       ),
@@ -476,15 +488,18 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   }
 
   Widget _buildLegend() {
-    return Wrap(
-      spacing: 16,
-      runSpacing: 8,
-      children: [
-        _legendItem(_cSelected, 'Selected'),
-        _legendItem(_cPremium, 'VIP (${widget.priceVip}\$)'),
-        _legendItem(_cUnavail, 'Not available'),
-        _legendItem(_cAvail, 'Regular (${widget.priceRegular} \$)'),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Wrap(
+        spacing: 16,
+        runSpacing: 8,
+        children: [
+          _legendItem(_cSelected, 'Selected'),
+          _legendItem(_cPremium, 'VIP (${widget.priceVip}\$)'),
+          _legendItem(_cUnavail, 'Not available'),
+          _legendItem(_cAvail, 'Regular (${widget.priceRegular} \$)'),
+        ],
+      ),
     );
   }
 
@@ -510,23 +525,26 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   Widget _buildSelectedChips() {
     final list = _selectedSeats;
     if (list.isEmpty) return const SizedBox.shrink();
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: list.map((s) {
-        return Chip(
-          label: Text(
-            '${s.c + 1} / ${s.r + 1} row',
-            style: const TextStyle(fontSize: 10),
-          ),
-          deleteIcon: const Icon(Icons.close, size: 16, color: AppColors.primaryDark),
-          onDeleted: () => _removeSeat(s.r, s.c),
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          backgroundColor: AppColors.borderLight,
-          side: const BorderSide(color: AppColors.borderLight),
-        );
-      }).toList(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 2,
+        children: list.map((s) {
+          return Chip(
+            label: Text(
+              '${s.c + 1} / ${s.r + 1} row',
+              style: const TextStyle(fontSize: 10),
+            ),
+            deleteIcon: const Icon(Icons.close, size: 16, color: AppColors.primaryDark),
+            onDeleted: () => _removeSeat(s.r, s.c),
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+            backgroundColor: AppColors.borderLight,
+            side: const BorderSide(color: AppColors.borderLight),
+          );
+        }).toList(),
+      ),
     );
   }
 
@@ -546,7 +564,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: .center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
                   'Total Price',
